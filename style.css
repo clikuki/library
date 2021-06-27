@@ -1,0 +1,128 @@
+main
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+h1
+{
+	margin: 10px;
+}
+
+button
+{
+	border-radius: 10px;
+	border: none;
+	padding: 3px;
+}
+
+button:hover
+{
+	background-color: #bdbdbd;
+}
+
+#library
+{
+	display: flex;
+	flex-wrap: wrap;
+
+	width: 70vw;
+	border: 7px solid #bdbdbd;
+	background-color: #9a9a9a;
+	border-radius: 10px;
+	padding: 10px;
+}
+
+.book
+{
+	flex-grow: 1;
+	position: relative;
+	margin: 10px;
+	border: 5px solid #bdbdbd;
+	border-radius: 10px;
+	padding: 10px;
+	background-color: #cbcbcb;
+}
+
+.book > .title
+{
+	text-align: center;
+	border-bottom: 1px solid #000000;
+	margin: 5px;
+}
+
+.book > div
+{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+} 
+
+#addBookForm
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	width: 70vw;
+	margin: 10px;
+	padding: 10px;
+
+	border: 7px solid #bdbdbd;
+	background-color: #9a9a9a;
+	border-radius: 10px;
+}
+
+#addBookForm > #addBookFormTitle
+{
+	margin: 2px;
+}
+
+#addBookForm:first-child
+{
+	margin-bottom: 5px;
+}
+
+#addBookFormInput
+{
+	width: 500px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;	
+}
+
+#addBookFormInput > input
+{
+	margin: 5px;
+	border-radius: 5px;
+	border: 1px solid #ededed;
+}
+
+#description
+{
+	text-align: center;
+	border-bottom: 1px solid #000000;
+	padding-bottom: 5px;
+	margin: 5px;
+}
+
+.edit, .delete
+{
+	width: 24px;
+	height: auto;
+}
+
+.edit:hover, .delete:hover
+{
+	background-color: #bababa;
+	border-radius: 3px;
+}
+
+.delete
+{
+	position: absolute;
+	top: 3px;
+	right: 3px;
+}
