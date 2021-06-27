@@ -1,5 +1,8 @@
+html {background-color: #ededed;}
+
 main
 {
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -87,9 +90,8 @@ button:hover
 
 #addBookFormInput
 {
-	width: 500px;
+	/* width: 300px; */
 	display: flex;
-	flex-wrap: wrap;
 	justify-content: center;	
 }
 
@@ -98,6 +100,19 @@ button:hover
 	margin: 5px;
 	border-radius: 5px;
 	border: 1px solid #ededed;
+}
+
+#text, #checkBox
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin: 10px;
+}
+
+#addBookFormInput > #text > input
+{
+	margin: 5px;
 }
 
 #description
@@ -125,4 +140,10 @@ button:hover
 	position: absolute;
 	top: 3px;
 	right: 3px;
+}
+
+#bookTemplate
+{
+	visibility: hidden;
+	position: absolute;
 }

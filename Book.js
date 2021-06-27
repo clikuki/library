@@ -1,16 +1,16 @@
-function Book (title, author, numOfPages, hasRead)
+function Book(title, author, pageNum, hasRead)
 {	// creates a book
 	this.title = title;
 	this.author = author;
-	this.numOfPages = numOfPages;
+	this.pageNum = pageNum;
 	this.hasRead = hasRead;
 }
 
-Book.prototype.info = function()
+Book.prototype.info = function info()
 { 	// when called, will return a string based on its properties
-	let infoStr = `${this.title} by ${this.author}, ${this.numOfPages} pages, `;
+	let infoStr = `${this.title} by ${this.author}, ${this.pageNum} pages, `;
 
-	if(this.hasRead) 
+	if(this.hasRead)
 	{
 		infoStr += 'has been read';
 	}
@@ -20,4 +20,4 @@ Book.prototype.info = function()
 	}
 
 	return infoStr;
-}
+};

@@ -10,68 +10,40 @@
 <body>
 	<main>
 		<h1>Library</h1>
-		<div id="library">
-			<div class="book">
-				<img src="assets/trash_48x48.png" alt="Delete book" class="delete">
-				<h4 class="title">BookA</h4>
-				<div class="author">
-					<span>Author: John Doe</span>
-					<img src="assets/edit_48x48.png" alt="Edit book info" class="edit">
-				</div>
-				<div class="numOfPages">
-					<span>Number of pages: 342</span>
-					<img src="assets/edit_48x48.png" alt="Edit book info" class="edit">
-				</div>
-				<div class="hasRead">
-					<span>Has Read: false</span>
-					<img src="assets/edit_48x48.png" alt="Edit book info" class="edit">
-				</div>
-			</div>
-			<div class="book">
-				<img src="assets/trash_48x48.png" alt="Delete book" class="delete">
-				<h4 class="title">BookB</h4>
-				<div class="author">
-					<span>Author: Mary Smith</span>
-					<img src="assets/edit_48x48.png" alt="Edit book info" class="edit">
-				</div>
-				<div class="numOfPages">
-					<span>Number of pages: 534</span>
-					<img src="assets/edit_48x48.png" alt="Edit book info" class="edit">
-				</div>
-				<div class="hasRead">
-					<span>Has Read: true</span>
-					<img src="assets/edit_48x48.png" alt="Edit book info" class="edit">
-				</div>
-			</div>
-			<div class="book">
-				<img src="assets/trash_48x48.png" alt="Delete book" class="delete">
-				<h4 class="title">
-					<span>BookA</span>
-				</h4>
-				<div class="author">
-					<span>Author: John Foe</span>
-					<img src="assets/edit_48x48.png" alt="Edit book info" class="edit">
-				</div>
-				<div class="numOfPages">
-					<span>Number of pages: 1352</span>
-					<img src="assets/edit_48x48.png" alt="Edit book info" class="edit">
-				</div>
-				<div class="hasRead">
-					<span>Has Read: true</span>
-					<img src="assets/edit_48x48.png" alt="Edit book info" class="edit">
-				</div>
-			</div>
-		</div>
+		<div id="library"></div>
 		<div id="addBookForm">
 			<h3 id="addBookFormTitle">Add more books</h3>
 			<span id="description">Add books to your library by adding their info and pressing "Add book to library"!</span>
 			<div id="addBookFormInput">
-				<input type="text" name="title" placeholder="title">
-				<input type="text" name="author" placeholder="author">
-				<input type="text" name="pageNum" placeholder="number of pages">
-				<input type="text" name="hasRead" placeholder="have read">
+				<div id="text">
+					<input type="text" name="title" placeholder="title">
+					<input type="text" name="author" placeholder="author">
+					<input type="number" name="pageNum" placeholder="number of pages">
+				</div>
+				<div id="checkBox">
+					<label>
+						<input type="checkbox" name="hasRead">
+						Have read
+					</label>
+				</div>
 			</div>
-			<button id="addBookBtn">Add book to library</button>
+			<button type="submit" id="addBookBtn">Add book to library</button>
+		</div>
+		<div id="bookTemplate">
+			<div class="book">
+				<img src="assets/trash_48x48.png" alt="Delete book" class="delete">
+				<h4 class="title"></h4>
+				<div class="author">
+					<span>Author: </span>
+				</div>
+				<div class="numOfPages">
+					<span>Number of pages: </span>
+				</div>
+				<div class="hasRead">
+					<span>Has Read: </span>
+					<img src="assets/edit_48x48.png" alt="Edit book info" class="edit">
+				</div>
+			</div>
 		</div>
 	</main>
 	<script src="Book.js"></script>
