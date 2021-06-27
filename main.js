@@ -45,13 +45,33 @@ function updateLibrary(bookInfo)
 {
 	const book = bookTemplate.cloneNode(true);
 
-	book.setAttribute('data-index', bookInfo.key);
+	book.setAttribute('data-key', bookInfo.key);
 	book.querySelector('.title').textContent = bookInfo.title;
 	book.querySelector('.author span').textContent += bookInfo.author;
 	book.querySelector('.numOfPages span').textContent += bookInfo.pageNum;
 	book.querySelector('.hasRead span').textContent += bookInfo.hasRead;
 
+	book.querySelector('.delete').addEventListener('click', (e) =>
+	{
+		deleteBook(e.target.parentElement);
+	});
+
 	libraryDiv.append(book);
+}
+
+function deleteBook(bookToDelete)
+{
+	const key = bookToDelete.getAttribute('data-key');
+
+	bookToDelete.remove();
+
+	for(const [index, book] of Object.entries(myLibrary))
+	{
+		if(book.key === key)
+		{
+			myLibrary.splice(index, 1);
+		}
+	}
 }
 
 function setEventListeners()
