@@ -1,29 +1,32 @@
 const libraryDiv = document.querySelector('#library');
-const addBookFormInputs = document.querySelectorAll('#addBookFormInput input');
-const [titleInput, authorInput, pageNumInput, hasReadBox] = addBookFormInputs;
+const textAndNumInputs = document.querySelectorAll('#addBookFormInput input');
+const [titleInput, authorInput, pageNumInput] = textAndNumInputs;
+const readRadioButtons = document.querySelectorAll('#radio input');
 const submitBookFormBtn = document.querySelector('#addBookBtn');
 const bookTemplate = document.querySelector('#bookTemplate > .book');
 
-const myLibrary = [
+const myLibrary = []; // stores your books and their info
+
+function dummyBooks()
+{
+	const dummyBooksArray = [
+		new Book('BookA', 'John Doe', 342, false),
+		new Book('BookB', 'Marry Smith', 254, true),
+		new Book('BookC', 'John Foe', 1352, true),
+	];
+
+	for(const dummyBook of dummyBooksArray)
 	{
-		title: 'BookA',
-		author: 'John Doe',
-		pageNum: 342,
-		hasRead: false,
-	},
-	{
-		title: 'BookB',
-		author: 'Mary Smith',
-		pageNum: 254,
-		hasRead: true,
-	},
-	{
-		title: 'BookB',
-		author: 'John Foe',
-		pageNum: 1352,
-		hasRead: true,
-	},
-]; // stores your books and their info
+		updateLibrary(dummyBook);
+		addBookToLibrary(dummyBook);
+	}
+}
+
+function getRadioButtonValue()
+{
+	if(readRadioButtons[0].checked) return true;
+	if(readRadioButtons[1].checked) return false;
+}
 
 function addBookToLibrary(bookInfo)
 {
@@ -42,6 +45,7 @@ function updateLibrary(bookInfo)
 {
 	const book = bookTemplate.cloneNode(true);
 
+	book.setAttribute('data-index', bookInfo.key);
 	book.querySelector('.title').textContent = bookInfo.title;
 	book.querySelector('.author span').textContent += bookInfo.author;
 	book.querySelector('.numOfPages span').textContent += bookInfo.pageNum;
@@ -55,13 +59,13 @@ function setEventListeners()
 	submitBookFormBtn.addEventListener('click', () =>
 	{
 		const bookInfo = new Book(
-			titleInput.value,
-			authorInput.value,
+			titleInput.value || 'undefined',
+			authorInput.value || 'undefined',
 			+pageNumInput.value,
-			hasReadBox.checked,
+			getRadioButtonValue(),
 		);
 
-		for(const input of addBookFormInputs)
+		for(const input of textAndNumInputs)
 		{
 			input.value = '';
 			input.checked = false;
@@ -76,6 +80,7 @@ function initialize()
 {
 	setEventListeners();
 	loadLibrary();
+	dummyBooks();
 }
 
 initialize();

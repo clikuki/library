@@ -20,21 +20,25 @@
 					<input type="text" name="author" placeholder="author">
 					<input type="number" name="pageNum" placeholder="number of pages">
 				</div>
-				<div id="checkBox">
+				<div id="radio">
 					<label>
-						<input type="checkbox" name="hasRead">
-						Have read
+						<input type="radio" name="read" value="1">
+						Read
+					</label>
+					<label>
+						<input type="radio" name="read" value="">
+						Unread
 					</label>
 				</div>
 			</div>
 			<button type="submit" id="addBookBtn">Add book to library</button>
 		</div>
 		<div id="bookTemplate">
-			<div class="book">
+			<div class="book" data-index="">
 				<img src="assets/trash_48x48.png" alt="Delete book" class="delete">
 				<h4 class="title"></h4>
 				<div class="author">
-					<span>Author: </span>
+					<span>By: </span>
 				</div>
 				<div class="numOfPages">
 					<span>Number of pages: </span>
