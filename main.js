@@ -24,9 +24,12 @@ function dummyBooks()
 }
 
 // TODO: Add book editing
+// sets book ready for editing
 function setBookForEditing(bookToEdit)
 {
 	const editableBook = editBookTemplate.cloneNode(true);
+	const key = bookToEdit.getAttribute('data-key');
+
 	let [, title, author, pageNum, hasRead] = bookToEdit.children;
 
 	// get title
@@ -38,7 +41,7 @@ function setBookForEditing(bookToEdit)
 		return variable.trim();
 	});
 
-	editableBook.setAttribute('data-key', 'key');
+	editableBook.setAttribute('data-key', key);
 	editableBook.querySelector('.title').textContent = title;
 	editableBook.querySelector('.author input').value += author;
 	editableBook.querySelector('.pageNum input').value += pageNum;
@@ -58,7 +61,12 @@ function setBookForEditing(bookToEdit)
 			break;
 	}
 
-	libraryDiv.append(editableBook);
+	editableBook.querySelector('.delete').addEventListener('click', (e) =>
+	{
+		deleteBook(e.target.parentElement);
+	});
+
+	libraryDiv.replaceChild(editableBook, bookToEdit);
 }
 
 // function editBookInfo(bookToEdit)
@@ -68,6 +76,7 @@ function setBookForEditing(bookToEdit)
 // 	console.log(bookToEdit, key);
 // }
 
+// removes book from dom and list
 function deleteBook(bookToDelete)
 {
 	const key = bookToDelete.getAttribute('data-key');
@@ -84,17 +93,20 @@ function deleteBook(bookToDelete)
 	}
 }
 
+// get values of radio btns from addBookForm
 function getRadioButtonValue()
 {
 	if(readRadioButtons[0].checked) return true;
 	if(readRadioButtons[1].checked) return false;
 }
 
+// push a book to myLibrary/array
 function addBookToLibrary(bookInfo)
 {
 	myLibrary.push(bookInfo);
 }
 
+// called at startup to load books from memory
 function loadLibrary()
 {
 	for(const book of myLibrary)
@@ -103,15 +115,22 @@ function loadLibrary()
 	}
 }
 
+// adds a book to library div
 function updateLibrary(bookInfo)
 {
 	const book = bookTemplate.cloneNode(true);
 
 	book.setAttribute('data-key', bookInfo.key);
-	book.querySelector('.title').textContent = bookInfo.title;
-	book.querySelector('.author .fill-in').textContent += bookInfo.author;
-	book.querySelector('.pageNum .fill-in').textContent += bookInfo.pageNum;
-	book.querySelector('.hasRead .fill-in').textContent += bookInfo.hasRead;
+
+	for(const [infoType, classes] of [
+		['title', '.title'],
+		['author', '.author .fill-in'],
+		['pageNum', '.pageNum .fill-in'],
+		['hasRead', '.hasRead .fill-in'],
+	]) // loop over array to get and set classes and info
+	{
+		book.querySelector(classes).textContent += bookInfo[infoType];
+	}
 
 	book.querySelector('.delete').addEventListener('click', (e) =>
 	{
@@ -126,6 +145,7 @@ function updateLibrary(bookInfo)
 	libraryDiv.append(book);
 }
 
+// creates a book
 function makeBook()
 {
 	const bookInfo = new Book(
@@ -145,6 +165,7 @@ function makeBook()
 	addBookToLibrary(bookInfo);
 }
 
+// sets required event listeners
 function setEventListeners()
 {
 	submitBookFormBtn.addEventListener('click', makeBook);

@@ -26,6 +26,7 @@ button:hover
 	background-color: #bdbdbd;
 }
 
+/* remove number spinners */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button
 {
@@ -33,10 +34,25 @@ input[type="number"]::-webkit-inner-spin-button
     margin: 0;
 }
 
+/* remove number spinners */
 input[type="number"]
 {
     -moz-appearance: textfield;
 }
+
+img
+{
+	width: 24px;
+	height: auto;
+}
+
+img:hover
+{
+	background-color: #bababa;
+	border-radius: 3px;
+}
+
+/* non-element styles */
 
 #library
 {
@@ -71,28 +87,13 @@ input[type="number"]
 .book .edit
 {
 	position: absolute;
-	bottom: 5px;
-	right: 5px;
+	top: 5px;
+	right: 30px;
 }
 
 .book.editMode > div
 {
 	justify-content: space-between;
-}
-
-.book.editMode input
-{
-	width: fit-content;
-}
-
-.book.editMode > .hasRead
-{
-	justify-content: flex-start;
-}
-
-.book.editMode > .hasRead > #radio
-{
-	margin-left: 25%;
 }
 
 .book .delete
@@ -115,9 +116,20 @@ input[type="number"]
 	align-items: center;
 } 
 
+.book > .author > input,
+.book > .pageNum > input
+{
+	width: 100px;
+} 
+
 .book > * > *:not(input)
 {
 	padding: 5px;
+}
+
+.book.editMode .choose
+{
+	justify-content: center;
 }
 
 #addBookForm
@@ -185,19 +197,7 @@ input[type="number"]
 	margin: 5px;
 }
 
-.edit, .delete
-{
-	width: 24px;
-	height: auto;
-}
-
-.edit:hover, .delete:hover
-{
-	background-color: #bababa;
-	border-radius: 3px;
-}
-
-#bookTemplate
+#bookTemplate, #editTemplate
 {
 	visibility: hidden;
 	position: absolute;
