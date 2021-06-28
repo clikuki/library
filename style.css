@@ -26,6 +26,18 @@ button:hover
 	background-color: #bdbdbd;
 }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button
+{
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"]
+{
+    -moz-appearance: textfield;
+}
+
 #library
 {
 	display: flex;
@@ -49,6 +61,47 @@ button:hover
 	background-color: #cbcbcb;
 }
 
+.book input
+{
+	background-color: #bcbcbc;
+	border: 1px solid #353535;
+	padding: 1px;
+}
+
+.book .edit
+{
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+}
+
+.book.editMode > div
+{
+	justify-content: space-between;
+}
+
+.book.editMode input
+{
+	width: fit-content;
+}
+
+.book.editMode > .hasRead
+{
+	justify-content: flex-start;
+}
+
+.book.editMode > .hasRead > #radio
+{
+	margin-left: 25%;
+}
+
+.book .delete
+{
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
 .book > .title
 {
 	text-align: center;
@@ -59,9 +112,13 @@ button:hover
 .book > div
 {
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
 } 
+
+.book > * > *:not(input)
+{
+	padding: 5px;
+}
 
 #addBookForm
 {
@@ -102,12 +159,17 @@ button:hover
 	border: 1px solid #ededed;
 }
 
-#text, #radio
+#addBookText, #addBookRadio
 {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	margin: 10px;
+}
+
+#addBookText > input
+{
+	margin: 2px;
 }
 
 #addBookFormInput > #text > input
@@ -133,13 +195,6 @@ button:hover
 {
 	background-color: #bababa;
 	border-radius: 3px;
-}
-
-.delete
-{
-	position: absolute;
-	top: 3px;
-	right: 3px;
 }
 
 #bookTemplate

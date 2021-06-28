@@ -15,12 +15,12 @@
 			<h3 id="addBookFormTitle">Add more books</h3>
 			<span id="description">Add books to your library by adding their info and pressing "Add book to library"!</span>
 			<div id="addBookFormInput">
-				<div id="text">
+				<div id="addBookText">
 					<input type="text" name="title" placeholder="title">
 					<input type="text" name="author" placeholder="author">
 					<input type="number" name="pageNum" placeholder="number of pages">
 				</div>
-				<div id="radio">
+				<div id="addBookRadio">
 					<label>
 						<input type="radio" name="read" value="1">
 						Read
@@ -39,13 +39,43 @@
 				<h4 class="title"></h4>
 				<div class="author">
 					<span>By: </span>
+					<span class="fill-in"></span>
 				</div>
-				<div class="numOfPages">
+				<div class="pageNum">
 					<span>Number of pages: </span>
+					<span class="fill-in"></span>
 				</div>
 				<div class="hasRead">
 					<span>Has Read: </span>
-					<img src="assets/edit_48x48.png" alt="Edit book info" class="edit">
+					<span class="fill-in"></span>
+				</div>
+				<img src="assets/edit_48x48.png" alt="Edit book info" class="edit">
+			</div>
+		</div>
+		<div id="editTemplate">
+			<div class="book editMode" data-key="">
+				<img src="assets/trash_48x48.png" alt="Delete book" class="delete">
+				<h4 class="title"><input type="text" name="author" placeholder="author"></h4>
+				<div class="author">
+					<span>By: </span>
+					<input type="text" name="author" placeholder="author">
+				</div>
+				<div class="pageNum">
+					<span>Number of pages: </span>
+					<input type="number" name="pageNum" placeholder="pageNum">
+				</div>
+				<div class="hasRead">
+					<span>Has Read: </span>
+					<div id="radio">
+						<label>
+							<input type="radio" name="read" value="1">
+							Read
+						</label>
+						<label>
+							<input type="radio" name="read" value="">
+							Unread
+						</label>
+					</div>
 				</div>
 			</div>
 		</div>
