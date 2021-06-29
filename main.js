@@ -142,8 +142,13 @@ function deleteBook(bookToDelete)
 		if(book.key === key)
 		{
 			myLibrary.splice(index, 1);
-			return;
+			break;
 		}
+	}
+
+	if(myLibrary.length === 0)
+	{
+		displayEmptyLibMessage();
 	}
 }
 
@@ -163,10 +168,26 @@ function addBookToLibrary(bookInfo)
 // called at startup to load books from memory
 function loadLibrary()
 {
-	for(const book of myLibrary)
+	if(myLibrary.length === 0)
 	{
-		updateLibrary(book);
+		displayEmptyLibMessage();
 	}
+	else
+	{
+		for(const book of myLibrary)
+		{
+			updateLibrary(book);
+		}
+	}
+}
+
+function displayEmptyLibMessage()
+{
+	const emptyLibSpan = document.createElement('span');
+	emptyLibSpan.id = 'emptyLibrary';
+	emptyLibSpan.textContent = 'Nothing in your library...';
+
+	libraryDiv.append(emptyLibSpan);
 }
 
 // adds a book to library div
@@ -217,29 +238,37 @@ function emptyAddBookForm()
 	}
 }
 
+function addBookFormCallback()
+{
+	const bookInfo = new Book(
+		titleInput.value || 'Unknown',
+		authorInput.value || 'Unknown',
+		+pageNumInput.value,
+		getRadioButtonValue(readRadioButtons),
+	);
+
+	const emptyLibMessage = libraryDiv.querySelector('#emptyLibrary');
+	if(emptyLibMessage)
+	{
+		libraryDiv.removeChild(emptyLibMessage);
+	}
+
+	emptyAddBookForm();
+	updateLibrary(bookInfo);
+	addBookToLibrary(bookInfo);
+}
+
 // sets required event listeners
 function setEventListeners()
 {
-	submitBookFormBtn.addEventListener('click', () =>
-	{
-		const bookInfo = new Book(
-			titleInput.value || 'Unknown',
-			authorInput.value || 'Unknown',
-			+pageNumInput.value,
-			getRadioButtonValue(readRadioButtons),
-		);
-
-		emptyAddBookForm();
-		updateLibrary(bookInfo);
-		addBookToLibrary(bookInfo);
-	});
+	submitBookFormBtn.addEventListener('click', addBookFormCallback);
 }
 
 function initialize()
 {
 	setEventListeners();
 	loadLibrary();
-	dummyBooks();
+	// dummyBooks();
 }
 
 initialize();
