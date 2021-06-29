@@ -116,6 +116,11 @@ img:hover
 	align-items: center;
 } 
 
+.book > .title > input
+{
+	text-align: center;
+}
+
 .book > .author > input,
 .book > .pageNum > input
 {

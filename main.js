@@ -1,7 +1,7 @@
 const libraryDiv = document.querySelector('#library');
 const textAndNumInputs = document.querySelectorAll('#addBookFormInput input');
 const [titleInput, authorInput, pageNumInput] = textAndNumInputs;
-const readRadioButtons = document.querySelectorAll('#radio input');
+const readRadioButtons = document.querySelectorAll('#addBookRadio input');
 const submitBookFormBtn = document.querySelector('#addBookBtn');
 const bookTemplate = document.querySelector('#bookTemplate > .book');
 const editBookTemplate = document.querySelector('#editTemplate > .book');
@@ -64,6 +64,13 @@ function setBookForEditing(bookToEdit)
 			break;
 	}
 
+	// prevent multiple book's radio buttons from sharing names
+	const randName = makeid(getRandomInt(10, 30));
+	for(const radioBtn of radioBtns)
+	{
+		radioBtn.name = randName;
+	}
+
 	editableBook.querySelector('.delete').addEventListener('click', (e) =>
 	{
 		deleteBook(e.target.parentElement);
@@ -87,10 +94,10 @@ function confirmEdit(editedBook)
 {
 	const title = editedBook.querySelector('.title input').value;
 	const author = editedBook.querySelector('.author input').value;
-	const pageNum = editedBook.querySelector('.pageNum input').value;
+	const pageNum = +editedBook.querySelector('.pageNum input').value;
 	const key = editedBook.getAttribute('data-key');
 
-	const hasReadRadioBtns = editedBook.querySelectorAll('.title input');
+	const hasReadRadioBtns = editedBook.querySelectorAll('.radio input');
 	const hasRead = getRadioButtonValue(hasReadRadioBtns);
 
 	const newBook = new Book(title, author, pageNum, hasRead, key);
@@ -143,10 +150,8 @@ function deleteBook(bookToDelete)
 // get values from 2 radio btns
 function getRadioButtonValue(radioBtns)
 {
-	console.log(radioBtns, readRadioButtons);
-
-	if(readRadioButtons[0].checked) return true;
-	if(readRadioButtons[1].checked) return false;
+	if(radioBtns[0].checked) return true;
+	if(radioBtns[1].checked) return false;
 }
 
 // push a book to myLibrary/array
