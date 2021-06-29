@@ -6,7 +6,7 @@ const submitBookFormBtn = document.querySelector('#addBookBtn');
 const bookTemplate = document.querySelector('#bookTemplate > .book');
 const editBookTemplate = document.querySelector('#editTemplate > .book');
 
-const myLibrary = []; // stores your books and their info
+let myLibrary = []; // stores your books and their info
 
 function dummyBooks()
 {
@@ -30,7 +30,7 @@ function setBookForEditing(bookToEdit)
 	const editableBook = editBookTemplate.cloneNode(true);
 	const key = bookToEdit.getAttribute('data-key');
 
-	let [, title, author, pageNum, hasRead] = bookToEdit.children;
+	let [,, title, author, pageNum, hasRead] = bookToEdit.children;
 
 	// get title
 	title = title.textContent;
@@ -42,7 +42,7 @@ function setBookForEditing(bookToEdit)
 	});
 
 	editableBook.setAttribute('data-key', key);
-	editableBook.querySelector('.title').textContent = title;
+	editableBook.querySelector('.title input').value += title;
 	editableBook.querySelector('.author input').value += author;
 	editableBook.querySelector('.pageNum input').value += pageNum;
 
@@ -50,14 +50,17 @@ function setBookForEditing(bookToEdit)
 	switch(hasRead)
 	{ // turn hasRead into a boolean
 		case 'true':
+			hasRead = true;
 			radioBtns[0].checked = true;
 			break;
 
 		case 'false':
+			hasRead = false;
 			radioBtns[1].checked = true;
 			break;
 
 		default:
+			hasRead = undefined;
 			break;
 	}
 
@@ -66,15 +69,59 @@ function setBookForEditing(bookToEdit)
 		deleteBook(e.target.parentElement);
 	});
 
+	editableBook.querySelector('.cancelEdit').addEventListener('click', () =>
+	{
+		replaceElInLibrary(bookToEdit, editableBook);
+	});
+
+	editableBook.querySelector('.confirmEdit').addEventListener('click', () =>
+	{
+		confirmEdit(editableBook);
+	});
+
 	libraryDiv.replaceChild(editableBook, bookToEdit);
 }
 
-// function editBookInfo(bookToEdit)
-// {
-// 	const key = bookToEdit.getAttribute('data-key');
+// changes book values
+function confirmEdit(editedBook)
+{
+	const title = editedBook.querySelector('.title input').value;
+	const author = editedBook.querySelector('.author input').value;
+	const pageNum = editedBook.querySelector('.pageNum input').value;
+	const key = editedBook.getAttribute('data-key');
 
-// 	console.log(bookToEdit, key);
-// }
+	const hasReadRadioBtns = editedBook.querySelectorAll('.title input');
+	const hasRead = getRadioButtonValue(hasReadRadioBtns);
+
+	const newBook = new Book(title, author, pageNum, hasRead, key);
+	const newBookEl = createBookElement(newBook);
+
+	editBookInfo(newBook);
+	replaceElInLibrary(newBookEl, editedBook);
+}
+
+// replaces book
+function replaceElInLibrary(originalBook, bookInEditState)
+{
+	libraryDiv.replaceChild(originalBook, bookInEditState);
+}
+
+// edits book info in array
+function editBookInfo(bookInfo)
+{
+	myLibrary = myLibrary.map((book) =>
+	{
+		if(book.key === bookInfo.key)
+		{
+			book.title = bookInfo.title;
+			book.author = bookInfo.author;
+			book.pageNum = bookInfo.pageNum;
+			book.hasRead = bookInfo.hasRead;
+		}
+
+		return book;
+	});
+}
 
 // removes book from dom and list
 function deleteBook(bookToDelete)
@@ -93,9 +140,11 @@ function deleteBook(bookToDelete)
 	}
 }
 
-// get values of radio btns from addBookForm
-function getRadioButtonValue()
+// get values from 2 radio btns
+function getRadioButtonValue(radioBtns)
 {
+	console.log(radioBtns, readRadioButtons);
+
 	if(readRadioButtons[0].checked) return true;
 	if(readRadioButtons[1].checked) return false;
 }
@@ -117,6 +166,14 @@ function loadLibrary()
 
 // adds a book to library div
 function updateLibrary(bookInfo)
+{
+	const book = createBookElement(bookInfo);
+
+	libraryDiv.append(book);
+}
+
+// create a book element to be appended to to replace
+function createBookElement(bookInfo)
 {
 	const book = bookTemplate.cloneNode(true);
 
@@ -142,33 +199,35 @@ function updateLibrary(bookInfo)
 		setBookForEditing(e.target.parentElement);
 	});
 
-	libraryDiv.append(book);
+	return book;
 }
 
-// creates a book
-function makeBook()
+// set add book form inputs to empty
+function emptyAddBookForm()
 {
-	const bookInfo = new Book(
-		titleInput.value || 'Unknown',
-		authorInput.value || 'Unknown',
-		+pageNumInput.value,
-		getRadioButtonValue(),
-	);
-
 	for(const input of textAndNumInputs)
 	{
 		input.value = '';
 		input.checked = false;
 	}
-
-	updateLibrary(bookInfo);
-	addBookToLibrary(bookInfo);
 }
 
 // sets required event listeners
 function setEventListeners()
 {
-	submitBookFormBtn.addEventListener('click', makeBook);
+	submitBookFormBtn.addEventListener('click', () =>
+	{
+		const bookInfo = new Book(
+			titleInput.value || 'Unknown',
+			authorInput.value || 'Unknown',
+			+pageNumInput.value,
+			getRadioButtonValue(readRadioButtons),
+		);
+
+		emptyAddBookForm();
+		updateLibrary(bookInfo);
+		addBookToLibrary(bookInfo);
+	});
 }
 
 function initialize()

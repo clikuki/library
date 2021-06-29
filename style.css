@@ -122,12 +122,12 @@ img:hover
 	width: 100px;
 } 
 
-.book > * > *:not(input)
+.book > * > *:not(input):not(img)
 {
 	padding: 5px;
 }
 
-.book.editMode .choose
+.book.editMode > .choose
 {
 	justify-content: center;
 }

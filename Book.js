@@ -1,10 +1,10 @@
-function Book(title, author, pageNum, hasRead)
+function Book(title, author, pageNum, hasRead, key)
 {	// creates a book
 	this.title = title;
 	this.author = author;
 	this.pageNum = pageNum;
 	this.hasRead = hasRead;
-	this.key = makeid(getRandomInt(10, 30));
+	this.key = key || makeid(getRandomInt(10, 30));
 }
 
 function getRandomInt(min, max)
