@@ -86,7 +86,7 @@ function setBookForEditing(bookToEdit)
 		confirmEdit(editableBook);
 	});
 
-	libraryDiv.replaceChild(editableBook, bookToEdit);
+	replaceElInLibrary(editableBook, bookToEdit);
 }
 
 // changes book values
