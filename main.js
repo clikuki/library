@@ -6,24 +6,8 @@ const submitBookFormBtn = document.querySelector('#addBookBtn');
 const bookTemplate = document.querySelector('#bookTemplate > .book');
 const editBookTemplate = document.querySelector('#editTemplate > .book');
 
-let myLibrary = []; // stores your books and their info
+let myLibrary = JSON.parse(localStorage.getItem('persistentLibrary')) || []; // stores your books and their info
 
-function dummyBooks()
-{
-	const dummyBooksArray = [
-		new Book('BookA', 'John Doe', 342, false),
-		new Book('BookB', 'Marry Smith', 254, true),
-		new Book('BookC', 'John Foe', 1352, false),
-	];
-
-	for(const dummyBook of dummyBooksArray)
-	{
-		updateLibrary(dummyBook);
-		addBookToLibrary(dummyBook);
-	}
-}
-
-// TODO: Add book editing
 // sets book ready for editing
 function setBookForEditing(bookToEdit)
 {
@@ -128,6 +112,8 @@ function editBookInfo(bookInfo)
 
 		return book;
 	});
+
+	updateLocalStorage();
 }
 
 // removes book from dom and list
@@ -150,6 +136,8 @@ function deleteBook(bookToDelete)
 	{
 		displayEmptyLibMessage();
 	}
+
+	updateLocalStorage();
 }
 
 // get values from 2 radio btns
@@ -163,6 +151,13 @@ function getRadioButtonValue(radioBtns)
 function addBookToLibrary(bookInfo)
 {
 	myLibrary.push(bookInfo);
+	updateLocalStorage();
+}
+
+// updates local storage at every change
+function updateLocalStorage()
+{
+	localStorage.setItem('persistentLibrary', JSON.stringify(myLibrary));
 }
 
 // called at startup to load books from memory
@@ -181,6 +176,7 @@ function loadLibrary()
 	}
 }
 
+// display a message to user if library is empty
 function displayEmptyLibMessage()
 {
 	const emptyLibSpan = document.createElement('span');
@@ -228,7 +224,7 @@ function createBookElement(bookInfo)
 	return book;
 }
 
-// set add book form inputs to empty
+// sets book form inputs to empty
 function emptyAddBookForm()
 {
 	for(const input of textAndNumInputs)
@@ -238,6 +234,7 @@ function emptyAddBookForm()
 	}
 }
 
+// callback for book form
 function addBookFormCallback()
 {
 	const bookInfo = new Book(
