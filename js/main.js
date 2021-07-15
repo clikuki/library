@@ -1,3 +1,6 @@
+import makeid from './makeid.js';
+import Book from './book.js';
+
 const libraryDiv = document.querySelector('#library');
 const textAndNumInputs = document.querySelectorAll('#addBookFormInput input');
 const [titleInput, authorInput, pageNumInput] = textAndNumInputs;
@@ -49,7 +52,7 @@ function setBookForEditing(bookToEdit)
 	}
 
 	// prevent multiple book's radio buttons from sharing names
-	const randName = makeid(getRandomInt(10, 30));
+	const randName = makeid();
 	for(const radioBtn of radioBtns)
 	{
 		radioBtn.name = randName;
@@ -265,7 +268,6 @@ function initialize()
 {
 	setEventListeners();
 	loadLibrary();
-	// dummyBooks();
 }
 
 initialize();

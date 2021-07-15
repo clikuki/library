@@ -3,11 +3,6 @@
         "browser": true,
         "es2021": true
     },
-    "globals": {
-        "Book": "readonly",
-        "getRandomInt": "readonly",
-        "makeid": "readonly"
-    },
     "extends": [
         "airbnb-base"
     ],
@@ -34,6 +29,7 @@
         "no-alert": "off",
         "no-fallthrough": ["error", { "commentPattern": "fallthrough!" }],
         "prefer-const": ["error", {"destructuring": "all"}],
-        "brace-style":  ["error", "allman", { "allowSingleLine": true }]
+        "brace-style":  ["error", "allman", { "allowSingleLine": true }],
+        "import/extensions": "off"
     }
 }
