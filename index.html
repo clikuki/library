@@ -11,29 +11,29 @@
 	<main>
 		<h1>Library</h1>
 		<div id="library"></div>
-		<div id="addBookForm">
+		<form id="addBookForm">
 			<h3 id="addBookFormTitle">Add more books</h3>
 			<span id="description">Add books to your library by adding their info and pressing "Add book to library"!</span>
 			<div id="addBookFormInput">
 				<div id="addBookText">
-					<input type="text" name="title" placeholder="title">
-					<input type="text" name="author" placeholder="author">
-					<input type="number" name="pageNum" placeholder="number of pages">
+					<input type="text" name="title" placeholder="title" required>
+					<input type="text" name="author" placeholder="author" required>
+					<input type="number" name="pageNum" placeholder="number of pages" required min="1">
 				</div>
 				<div id="addBookRadio">
 					<label>
-						<input type="radio" name="addBookRead" value="1">
+						<input type="radio" name="addBookRead" value="1" required>
 						Read
 					</label>
 					<label>
-						<input type="radio" name="addBookRead" value="">
+						<input type="radio" name="addBookRead" value="" required>
 						Unread
 					</label>
 				</div>
 			</div>
 			<button type="submit" id="addBookBtn">Add book to library</button>
-		</div>
-		<div id="bookTemplate">
+		</form>
+		<template id="bookTemplate">
 			<div class="book" data-key="">
 				<img src="assets/trash_48x48.png" alt="Delete book" class="delete">
 				<img src="assets/edit_48x48.png" alt="Edit book info" class="edit">
@@ -51,38 +51,44 @@
 					<span class="fill-in"></span>
 				</div>
 			</div>
-		</div>
-		<div id="editTemplate">
-			<div class="book editMode" data-key="">
-				<img src="assets/trash_48x48.png" alt="Delete book" class="delete">
-				<h4 class="title"><input type="text" name="author" placeholder="author"></h4>
-				<div class="author">
-					<span>By: </span>
-					<input type="text" name="author" placeholder="author">
-				</div>
-				<div class="pageNum">
-					<span>Number of pages: </span>
-					<input type="number" name="pageNum" placeholder="pageNum">
-				</div>
-				<div class="hasRead">
-					<span>Has Read: </span>
-					<div class="radio">
-						<label>
-							<input type="radio" name="">
-							Read
-						</label>
-						<label>
-							<input type="radio" name="">
-							Unread
-						</label>
+		</template>
+		<template id="editTemplate">
+				<form class="book editMode" data-key="">
+					<img src="assets/trash_48x48.png" alt="Delete book" class="delete">
+					<h4 class="title">
+						<input type="text" name="author" placeholder="author" required>
+					</h4>
+					<div class="author">
+						<span>By: </span>
+						<input type="text" name="author" placeholder="author" required>
 					</div>
-				</div>
-				<div class="choose">
-					<img src="assets/confirm_48x48.png" alt="confirm edit" class="confirmEdit">
-					<img src="assets/close_48x48.png" alt="cancel edit" class="cancelEdit">
-				</div>
-			</div>
-		</div>
+					<div class="pageNum">
+						<span>Number of pages: </span>
+						<input type="number" name="pageNum" placeholder="pageNum" required min="1">
+					</div>
+					<div class="hasRead">
+						<span>Has Read: </span>
+						<div class="radio">
+							<label>
+								<input type="radio" name="" required>
+								Read
+							</label>
+							<label>
+								<input type="radio" name="" required>
+								Unread
+							</label>
+						</div>
+					</div>
+					<div class="choose">
+						<button type="submit">
+							<img src="assets/confirm_48x48.png" alt="confirm edit" class="confirmEdit">
+						</button>
+						<button type="submit">
+							<img src="assets/close_48x48.png" alt="cancel edit" class="cancelEdit">
+						</button>
+					</div>
+				</form>
+		</template>
 	</main>
 	<script src="js/main.js" type="module"></script>
 </body>

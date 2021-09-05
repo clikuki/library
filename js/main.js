@@ -2,19 +2,19 @@ import makeid from './makeid.js';
 import Book from './book.js';
 
 const libraryDiv = document.querySelector('#library');
-const textAndNumInputs = document.querySelectorAll('#addBookFormInput input');
+const textAndNumInputs = document.querySelectorAll('#addBookFormInput #addBookText input');
 const [titleInput, authorInput, pageNumInput] = textAndNumInputs;
 const readRadioButtons = document.querySelectorAll('#addBookRadio input');
 const submitBookFormBtn = document.querySelector('#addBookBtn');
-const bookTemplate = document.querySelector('#bookTemplate > .book');
-const editBookTemplate = document.querySelector('#editTemplate > .book');
+const bookTemplate = document.querySelector('#bookTemplate');
+const editBookTemplate = document.querySelector('#editTemplate');
 
 let myLibrary = JSON.parse(localStorage.getItem('persistentLibrary')) || []; // stores your books and their info
 
 // sets book ready for editing
 function setBookForEditing(bookToEdit)
 {
-	const editableBook = editBookTemplate.cloneNode(true);
+	const editableBook = editBookTemplate.content.cloneNode(true).children[0];
 	const key = bookToEdit.getAttribute('data-key');
 
 	let [,, title, author, pageNum, hasRead] = bookToEdit.children;
@@ -79,6 +79,11 @@ function setBookForEditing(bookToEdit)
 // changes book values
 function confirmEdit(editedBook)
 {
+	for(const input of editedBook.querySelectorAll('input'))
+	{
+		if(!input.validity.valid) return;
+	}
+
 	const title = editedBook.querySelector('.title input').value;
 	const author = editedBook.querySelector('.author input').value;
 	const pageNum = +editedBook.querySelector('.pageNum input').value;
@@ -103,18 +108,12 @@ function replaceElInLibrary(originalBook, bookInEditState)
 // edits book info in array
 function editBookInfo(bookInfo)
 {
-	myLibrary = myLibrary.map((book) =>
+	const book = myLibrary.find(book => book.key === bookInfo.key);
+	
+	for(const prop in bookInfo)
 	{
-		if(book.key === bookInfo.key)
-		{
-			book.title = bookInfo.title;
-			book.author = bookInfo.author;
-			book.pageNum = bookInfo.pageNum;
-			book.hasRead = bookInfo.hasRead;
-		}
-
-		return book;
-	});
+		book[prop] = bookInfo[prop];
+	}
 
 	updateLocalStorage();
 }
@@ -126,19 +125,10 @@ function deleteBook(bookToDelete)
 
 	bookToDelete.remove();
 
-	for(const [index, book] of Object.entries(myLibrary))
-	{
-		if(book.key === key)
-		{
-			myLibrary.splice(index, 1);
-			break;
-		}
-	}
+ 	const index = myLibrary.findIndex(book => book.key === key);
+	myLibrary.splice(index, 1);
 
-	if(myLibrary.length === 0)
-	{
-		displayEmptyLibMessage();
-	}
+	if(myLibrary.length === 0) displayEmptyLibMessage();
 
 	updateLocalStorage();
 }
@@ -200,7 +190,7 @@ function updateLibrary(bookInfo)
 // create a book element to be appended to to replace
 function createBookElement(bookInfo)
 {
-	const book = bookTemplate.cloneNode(true);
+	const book = bookTemplate.content.cloneNode(true).children[0];
 
 	book.setAttribute('data-key', bookInfo.key);
 
@@ -230,7 +220,7 @@ function createBookElement(bookInfo)
 // sets book form inputs to empty
 function emptyAddBookForm()
 {
-	for(const input of textAndNumInputs)
+	for(const input of [...textAndNumInputs, ...readRadioButtons])
 	{
 		input.value = '';
 		input.checked = false;
@@ -238,8 +228,15 @@ function emptyAddBookForm()
 }
 
 // callback for book form
-function addBookFormCallback()
+function addBookFormCallback(e)
 {
+	for(const input of [...textAndNumInputs, ...readRadioButtons])
+	{
+		if(!input.validity.valid) return;
+	}
+
+	e.preventDefault();
+
 	const bookInfo = new Book(
 		titleInput.value || 'Unknown',
 		authorInput.value || 'Unknown',

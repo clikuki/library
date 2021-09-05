@@ -40,6 +40,11 @@ input[type="number"]
     -moz-appearance: textfield;
 }
 
+input:invalid
+{
+	box-shadow: 0 0 10 red;
+}
+
 img
 {
 	width: 24px;
@@ -201,10 +206,4 @@ img:hover
 	border-bottom: 1px solid #000000;
 	padding-bottom: 5px;
 	margin: 5px;
-}
-
-#bookTemplate, #editTemplate
-{
-	visibility: hidden;
-	position: absolute;
 }
